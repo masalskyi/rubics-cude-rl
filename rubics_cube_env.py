@@ -199,18 +199,19 @@ class RubicsCubeEnv(gym.Env):
         ]
 
     def step(self, action):
+        self.state = self.perform_action(self.state, action)
+        return self.state, 0, False, {}
+    def perform_action(self, state, action):
+        new_state = np.copy(state)
         is_backward = action % 2 == 1
         action = action // 2
-        new_state = np.copy(self.state)
-        for i, v in enumerate(self.state):
+        for i, v in enumerate(state):
             if v in self.action_transitions[action].forward:
                 if is_backward:
                     new_state[i] = self.action_transitions[action].backward[v]
                 else:
                     new_state[i] = self.action_transitions[action].forward[v]
-        self.state = new_state
-        return self.state, 0, False, {}
-
+        return new_state
     def reset(self, *, seed=None, return_info: bool = False, options=None):
         self.state = np.array([0, 1, 2, 3, 4, 5, 6, 7, 39, 17, 21, 35, 40, 41, 42, 43, 44, 45, 46, 47])
         return self.state
