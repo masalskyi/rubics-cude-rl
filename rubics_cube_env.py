@@ -252,5 +252,20 @@ class RubicsCubeEnv(gym.Env):
                 = [0, 0, 0]
 
         for i in range(13):
-            image[min(12 * self.square_size -1, i*self.square_size), 3 * self.square_size:6 * self.square_size] = \
+            image[min(12 * self.square_size - 1, i * self.square_size), 3 * self.square_size:6 * self.square_size] = \
                 [0, 0, 0]
+
+        image[:, 3 * self.square_size - 1] = [0, 0, 0]
+        image[:, 3 * self.square_size + 1] = [0, 0, 0]
+
+        image[:, 6 * self.square_size - 1] = [0, 0, 0]
+        image[:, 6 * self.square_size + 1] = [0, 0, 0]
+
+        image[3 * self.square_size - 1, :] = [0, 0, 0]
+        image[3 * self.square_size + 1, :] = [0, 0, 0]
+
+        image[6 * self.square_size - 1, :] = [0, 0, 0]
+        image[6 * self.square_size + 1, :] = [0, 0, 0]
+
+        image[9 * self.square_size - 1, 3 * self.square_size:6 * self.square_size] = [0, 0, 0]
+        image[9 * self.square_size + 1, 3 * self.square_size:6 * self.square_size] = [0, 0, 0]

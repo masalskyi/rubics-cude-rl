@@ -3,8 +3,8 @@ import time
 import cv2
 env = RubicsCubeEnv()
 env.reset()
-# F R U B L`
-actions = [8, 6, 0, 4, 3]
+# R R L U` F B` D L` U U R` F B` D
+actions = [6, 6, 2, 1, 8, 5, 10, 3, 0, 0, 7, 8, 5, 10]
 for a in actions:
     state, _, __, ___, = env.step(a)
 
