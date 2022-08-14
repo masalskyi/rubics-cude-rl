@@ -79,14 +79,25 @@ class RubicsCubeEnv(gym.Env):
         # 2*i - turn i side clockwise, 2*i+1 -turn i side counter_clock_wise
         self.action_space = gym.spaces.Discrete(12)
         self.observation_space = gym.spaces.Box(low=0, high=46, shape=(20,), dtype=np.int)
-        self.state = np.array([0, 1, 2, 3, 4, 5, 6, 7, 38, 17, 21, 34, 39, 40, 41, 42, 43, 44, 45, 46])
+        self.state = np.array([0, 1, 2, 3, 4, 5, 6, 7, 39, 17, 21, 35, 40, 41, 42, 43, 44, 45, 46, 47])
         self.action_transitions = [self.StateTransition(side=i) for i in range(6)]
 
     def step(self, action):
-        pass
+        is_backward = action % 2 == 1
+        action = action // 2
+        new_state = np.copy(self.state)
+        for i, v in enumerate(self.state):
+            if v in self.action_transitions[action].forward:
+                if is_backward:
+                    new_state[i] = self.action_transitions[action].backward[v]
+                else:
+                    new_state[i] = self.action_transitions[action].forward[v]
+        self.state = new_state
+        return self.state, 0, False, {}
 
     def reset(self, *, seed=None, return_info: bool = False, options=None):
-        pass
+        self.state = np.array([0, 1, 2, 3, 4, 5, 6, 7, 39, 17, 21, 35, 40, 41, 42, 43, 44, 45, 46, 47])
+        return self.state
 
     def render(self, mode="human"):
         pass
